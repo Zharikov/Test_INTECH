@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="description" content="ЛОЛКЕК"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>Форум</title>
+    <link href="/webjars/materializecss/0.100.2/css/materialize.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <div class="container">
+                <ul id="nav-left" class="right hide-on-med-and-down">
+                    <li><a th:href="@{'/'}">Домой</a></li>
+                    <li><a th:href="@{'/login'}">Авторизация</a></li>
+                    <li><a th:href="@{'/register'}">Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main layout:fragment="content">
+        <p>----</p>
+    </main>
+    <footer class="page-footer">
+
+    </footer>
+    <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/webjars/materializecss/0.100.2/js/materialize.min.js"></script>
+</body>
+</html>

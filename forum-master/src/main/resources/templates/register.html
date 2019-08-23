@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/offline">
+<head>
+    <meta charset="utf-8"/>
+    <title>Регистрация</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <article class="container" style="padding-top: 3%;">
+            <header class="row">
+                <div class="col s12">
+                    <h3 class="center">Регистрация</h3>
+                    <h5 class="center">Зарегистрируйтесь на форуме</h5>
+                </div>
+            </header>
+            <section>
+                <form th:action="@{/register}" method="post">
+                    <div class="row">
+                        <div class="col s12">
+                            <label> Логин:
+                                <input type="text" name="username" minlength="3" maxlength="10" data-length="10" required="required"/>
+                                <p class="center flow-text" th:if="${param.error}">Некорректный логин</p>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label> Имя:
+                                <input type="text" name="firstname" maxlength="100" data-length="100" required="required"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label> Фамилия:
+                                <input type="text" name="secondname" maxlength="100" data-length="100" required="required"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <label> Пароль:
+                                <input  type="password" title="Пароль должен содержать не менее 6 символов, включая хотя бы одна цифра, строчной буквы, заглавной буквы и символа из !@#$%  " name="password" minlength="6" maxlength="10" data-length="10"  required="required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+                                        onchange="this.setCustomValidity(this.validity.patternMismatch ? this.title : ''); if(this.checkValidity()) form.pwd2.pattern = RegExp.escape(this.value);"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="isadmin" name="isadmin"/>
+                        <label for="isadmin">Является администратором</label>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 center">
+                            <p class="center">В случае успешной регистрации вы будете перенаправлены на страницу авторизации</p>
+                            <p class="center">В противном случае измените ваше имя пользователя</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 center">
+                            <button class="btn waves-effect waves-light btn-large" type="submit" name="register">Зарегистрироваться</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </article>
+    </main>
+</body>
+</html>

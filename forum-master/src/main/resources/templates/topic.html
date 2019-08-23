@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/online">
+<!--/*@thymesVar id="topic" type="com.intech.forum.entities.Topic"*/-->
+<head>
+    <title th:text="${topic.getTitle()}">Название темы</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <article class="container" style="padding: 3% 0 2%;">
+            <header class="row">
+                <div class="col s12">
+                    <blockquote class="flow-text left" th:text="${topic.getTitle()}">Название темы</blockquote>
+                </div>
+            </header>
+            <section class="row">
+                <div class="col s12">
+                    <a th:href="@{'/profile/' + ${topic.getUser().getId()}}">
+                        <span class="chip left" th:text="${topic.getUser().getUsername()}">Авторе темы</span>
+                    </a>
+                    <span class="right" th:text="${topic.displayParsedCreatedDate()}"></span>
+                </div>
+            </section>
+            <section class="row">
+                <p class="col s12" style="text-align: justify; display:block; white-space:pre-wrap"
+                   th:text="${topic.getContent()}"> содержание темы </p>
+            </section>
+            <header class="row">
+                <div class="col s12">
+                    <blockquote class="flow-text left" th:text="|Сообщений: | + ${answers.size()}">Количество сообщений</blockquote>
+                </div>
+            </header>
+            <section class="row">
+                <div class="col s12" th:each="answer : ${answers}" style="margin: 3% 0 3%; padding: 2%; border-top-right-radius: 10px;
+                        border-bottom-right-radius: 10px; background: linear-gradient(to right, #e7e4e4, #f3f2f2);
+                        background: -webkit-linear-gradient(left, #e7e4e4, #f3f2f2);
+                        background: -o-linear-gradient(right, #e7e4e4, #f3f2f2);
+                        background: -moz-linear-gradient(right, #e7e4e4, #f3f2f2);">
+                    <a th:href="@{'/profile/' + ${answer.getUser().getId()}}">
+                        <span class="chip left" style="background-color: #f3f2f2;" th:text="${answer.getUser().getUsername()}">
+                           Автор сообщения
+                        </span>
+                    </a>
+                    <span class="chip left" th:if="${answer.isUseful()}" th:text="|Полезное|" style="background-color: #ee6e73;">
+                        Useful
+                    </span>
+                    <span class="right" th:text="${answer.displayParsedCreatedDate()}"></span>
+                    <span th:if="${topic.getUser().getId() == idUser}">
+                        <form th:action="@{/topic/{topic.getId()}}" method="post">
+                            <input type="hidden" name="id_answer" th:value="${answer.getId()}"/>
+                            <input type="hidden" name="state" th:value="${answer.isUseful()}"/>
+                            <input type="hidden" name="action" th:value="Полезно"/>
+                            <input type="hidden" name="id_topic" th:value="${topic.getId()}"/>
+                            <button class="chip left" style="background-color: #37b7ab;">Полезно/Не полезно</button>
+                        </form>
+                    </span>
+                    <span th:if="${answer.getUser().getId() == idUser}">
+                        <form th:action="@{/topic/{topic.getId()}}" method="post">
+                            <input type="hidden" name="id_answer" th:value="${answer.getId()}"/>
+                            <input type="hidden" name="action" th:value="Удалить"/>
+                            <input type="hidden" name="id_topic" th:value="${topic.getId()}"/>
+                            <button class="chip left" style="background-color: #37b7ab;">Удалить</button>
+                        </form>
+                    </span>
+                    <div class="row">
+                        <p class="col s12" style="text-align: justify; display:block; white-space:pre-wrap"
+                           th:text="${answer.getContent()}">
+                            Содержание сообщения
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <header class="row">
+                <div class="col s12">
+                    <blockquote class="flow-text left" th:text="|Добавить сообщение: |">Добавить сообщение</blockquote>
+                </div>
+            </header>
+            <section>
+                <form th:action="@{/topic}" method="post">
+                    <div class="row">
+                        <div class="col s12">
+                            <label>Текст сообщения:
+                                <textarea name="content" class="materialize-textarea" minlength="5" maxlength="1024"
+                                          data-length="1024" required="required"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_topic" th:value="${topic.getId()}"/>
+                    <input type="hidden" name="id_user" th:value="${idUser}"/>
+                    <div class="row">
+                        <div class="col s12 center">
+                            <button class="btn waves-effect waves-light btn-large" type="submit" name="answer">Отправить сообщение</button>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </article>
+    </main>
+    <!--/*@thymesVar id="getTitle" type="com.intech.forum.entities.Topic"*/-->
+    <!--/*@thymesVar id="answers" type="java.util.List"*/-->
+</body>
+</html>
